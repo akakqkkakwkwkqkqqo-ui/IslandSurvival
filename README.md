@@ -1,1 +1,2 @@
 # IslandSurvival
+Server deployment
