@@ -1349,6 +1349,10 @@ var craft_catalog_default = {
   ]
 };
 
+// cloudflare_server/src/catalog-names-en.mjs
+var itemNames = { wood: "Wood", stone: "Stone", fuel: "Fuel", iron: "Iron", iron_ore: "Iron ore", sulfur_ore: "Sulfur ore", sulfur: "Sulfur", coal: "Charcoal", powder: "Gunpowder", hq_ore: "High-quality metal ore", mvk: "High-quality metal", crude_oil: "Crude oil", fat: "Animal fat", scrap: "Scrap", pipe: "Metal pipe", spring: "Metal spring", tech: "Electronics", rope: "Rope", cloth: "Cloth", leather: "Leather", bone: "Bones", furnace_small: "Small furnace", furnace_large: "Large furnace", refinery: "Oil refinery", territory_cupboard: "Territory cupboard", workbench1: "Workbench 1", workbench2: "Workbench 2", workbench3: "Workbench 3", fire: "Campfire", sleeping_bag: "Sleeping bag", chest_small: "Small storage box", chest_large: "Large storage box", backpack: "Leather backpack", backpack_large: "Reinforced backpack", shirt: "Shirt", pants: "Pants", mask: "Cloth mask", hood: "Leather hood", armor: "Leather chest armor", waist: "Leather leg armor", boots: "Leather boots", bone_head: "Bone helmet", bone_body: "Bone chest armor", bone_legs: "Bone leg armor", bone_feet: "Bone footwear", iron_head: "Iron helmet", iron_body: "Iron chest armor", iron_legs: "Iron leg armor", iron_feet: "Iron footwear", mvk_head: "High-quality metal helmet", mvk_body: "High-quality metal chest armor", mvk_legs: "High-quality metal leg armor", mvk_feet: "High-quality metal footwear", axe: "Stone axe", pick: "Stone pickaxe", hammer: "Building hammer", plan: "Building plan", knife: "Knife", spear: "Spear", bow: "Bow", crossbow: "Crossbow", pistol: "Pistol", shotgun: "Shotgun", smg: "Submachine gun", rifle: "Assault rifle", bolt: "Bolt-action rifle", arrow: "Arrows", pistol_ammo: "Pistol ammunition", shell: "Shotgun shells", rifle_ammo: "Rifle ammunition", bandage: "Bandage", process_iron: "Smelt iron", process_sulfur: "Smelt sulfur", process_mvk: "Smelt high-quality metal", process_coal: "Produce charcoal", process_fuel: "Refine crude oil into fuel", foundation: "Wooden foundation", wall: "Wooden wall", floor: "Wooden floor", stairs: "Wooden stairs", roof: "Wooden roof", doorframe: "Doorway", door: "Wooden door", metal_door: "Metal door", lock: "Lock", upgrade_stone: "Upgrade section to stone", upgrade_metal: "Upgrade section to metal" };
+var stationNames = { "\u0412\u0440\u0443\u0447\u043D\u0443\u044E": "By hand", "\u041C\u0430\u043B\u0430\u044F \u0438\u043B\u0438 \u0431\u043E\u043B\u044C\u0448\u0430\u044F \u043F\u0435\u0447\u043A\u0430": "Small or large furnace", "\u041C\u043E\u043B\u043E\u0442\u043E\u043A \xB7 \u043D\u0430 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u043E\u0439 \u0441\u0435\u043A\u0446\u0438\u0438": "Hammer \xB7 placed building section", "\u041D\u0435\u0444\u0442\u0435\u043F\u0435\u0440\u0435\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A": "Oil refinery", "\u0412\u0435\u0440\u0441\u0442\u0430\u043A 1": "Workbench 1", "\u0412\u0435\u0440\u0441\u0442\u0430\u043A 2": "Workbench 2", "\u0412\u0435\u0440\u0441\u0442\u0430\u043A 3": "Workbench 3", "\u0411\u043E\u043B\u044C\u0448\u0430\u044F \u043F\u0435\u0447\u043A\u0430": "Large furnace", "\u041C\u043E\u043B\u043E\u0442\u043E\u043A \xB7 \u043F\u043E\u0441\u043B\u0435 \u043A\u0430\u043C\u0435\u043D\u043D\u043E\u0433\u043E \u0443\u0440\u043E\u0432\u043D\u044F": "Hammer \xB7 after stone upgrade", "\u041F\u043B\u0430\u043D \u043F\u043E\u0441\u0442\u0440\u043E\u0439\u043A\u0438": "Building plan", "\u041A\u043E\u0441\u0442\u0451\u0440 \u0438\u043B\u0438 \u043F\u0435\u0447\u043A\u0430": "Campfire or furnace" };
+
 // cloudflare_server/src/catalog.mjs
 var catalog_exports = {};
 __export(catalog_exports, {
@@ -1417,13 +1421,13 @@ var resourceIds = /* @__PURE__ */ new Set(["wood", "stone", "fuel", "iron", "iro
 var ammo = /* @__PURE__ */ new Set(["arrow", "pistol_ammo", "shell", "rifle_ammo"]);
 for (const [id, name] of Object.entries(craft_catalog_default.items)) {
   if (id.startsWith("process_") || id.startsWith("upgrade_")) continue;
-  items2[id] = { ...items[id] || {}, id, name, category: resourceIds.has(id) ? "resource" : ammo.has(id) ? "ammo" : "item", maxStack: resourceIds.has(id) ? 1e3 : ammo.has(id) ? 128 : id === "bandage" ? 20 : 1, modelId: id, modelStatus: items[id]?.modelStatus || "not_integrated" };
+  items2[id] = { ...items[id] || {}, id, name: itemNames[id] ?? name, category: resourceIds.has(id) ? "resource" : ammo.has(id) ? "ammo" : "item", maxStack: resourceIds.has(id) ? 1e3 : ammo.has(id) ? 128 : id === "bandage" ? 20 : 1, modelId: id, modelStatus: items[id]?.modelStatus || "not_integrated" };
 }
 var processStations = { process_iron: ["furnace_small", "furnace_large"], process_sulfur: ["furnace_small", "furnace_large"], process_mvk: ["furnace_large"], process_coal: ["fire", "furnace_small", "furnace_large"], process_fuel: ["refinery"] };
 var times = { furnace_small: 15, furnace_large: 45, refinery: 40, territory_cupboard: 15, workbench1: 10, workbench2: 20, workbench3: 30, sleeping_bag: 10 };
 for (const r of craft_catalog_default.recipes) {
   const seconds = times[r.id] || (["\u041E\u0440\u0443\u0436\u0438\u0435", "\u0411\u0440\u043E\u043D\u044F \u041C\u0412\u041A", "\u0416\u0435\u043B\u0435\u0437\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F"].includes(r.category) ? 10 : 3);
-  recipes2[r.id] = { id: r.id, name: r.name, output: r.output, amount: r.amount, inputs: { ...r.inputs }, tier: r.tier, research: 0, durationMs: seconds * 1e3, kind: r.kind, station: r.station, stationTypes: processStations[r.id] || null };
+  recipes2[r.id] = { id: r.id, name: itemNames[r.id] ?? r.name, output: r.output, amount: r.amount, inputs: { ...r.inputs }, tier: r.tier, research: 0, durationMs: seconds * 1e3, kind: r.kind, station: stationNames[r.station] ?? r.station, stationTypes: processStations[r.id] || null };
   if (r.slot) items2[r.output].slot = r.slot;
   if (r.kind === "building") building2[r.id] = { ...r.inputs };
 }
@@ -2314,9 +2318,57 @@ var ReleaseChannel = class {
   }
 };
 
+// cloudflare_server/src/server-directory.mjs
+var CYCLE_MS = 72 * 60 * 60 * 1e3;
+var DEFAULT_EPOCH = Date.UTC(2026, 9, 26, 0, 0, 0);
+var SERVER_SLOTS = [{ slug: "island-1", name: "Horizon 01" }, { slug: "island-2", name: "Horizon 02" }];
+function epochOf(env = {}) {
+  const n = env.SERVERS_EPOCH === void 0 ? DEFAULT_EPOCH : Number(env.SERVERS_EPOCH);
+  if (!Number.isSafeInteger(n) || n < 0) throw Error("invalid_servers_epoch");
+  return n;
+}
+function describeServer(key, env = {}) {
+  const match = /^(island-[12]):(0|[1-9][0-9]{0,6})$/.exec(key || "");
+  if (!match) throw Error("invalid_server_key");
+  const slot = SERVER_SLOTS.find((x) => x.slug === match[1]), cycle = Number(match[2]), startsAt = epochOf(env) + cycle * CYCLE_MS;
+  return { key, slug: slot.slug, name: slot.name, cycle, startsAt, endsAt: startsAt + CYCLE_MS, map: "Island \xB7 5000 \xD7 5000", maxPlayers: 8 };
+}
+function currentServers(now = Date.now(), env = {}) {
+  const cycle = Math.max(0, Math.floor((now - epochOf(env)) / CYCLE_MS));
+  return SERVER_SLOTS.map((s) => describeServer(s.slug + ":" + cycle, env));
+}
+function serverOpen(s, now = Date.now()) {
+  return now >= s.startsAt && now < s.endsAt;
+}
+function ensureOfficialWorld(engine, descriptor) {
+  const existing = engine.state.rooms["scheduled-world"];
+  if (existing) {
+    if (existing.serverKey !== descriptor.key || existing.expiresAt !== descriptor.endsAt) throw Error("scheduled_world_identity_mismatch");
+    return existing;
+  }
+  if (Object.keys(engine.state.rooms).length || Object.keys(engine.state.players).length) throw Error("refuse_schedule_over_legacy_world");
+  const draft = structuredClone(engine.state);
+  draft.rooms["scheduled-world"] = { id: "scheduled-world", name: descriptor.name, owner: null, players: [], started: true, maxPlayers: descriptor.maxPlayers, nodes: {}, resourceManifest: engine.world.resourceManifest, constructionManifest: engine.world.construction.manifest, stations: {}, builds: {}, official: true, serverKey: descriptor.key, openedAt: descriptor.startsAt, expiresAt: descriptor.endsAt, closedAt: null };
+  draft.revision++;
+  engine.persist(draft);
+  engine.state = draft;
+  return draft.rooms["scheduled-world"];
+}
+function archiveOfficialWorld(engine, now = Date.now()) {
+  const room = engine.state.rooms["scheduled-world"];
+  if (!room || room.closedAt !== null || now < room.expiresAt) return false;
+  const draft = structuredClone(engine.state);
+  draft.rooms["scheduled-world"].closedAt = room.expiresAt;
+  draft.rooms["scheduled-world"].archivedAt = now;
+  draft.revision++;
+  engine.persist(draft);
+  engine.state = draft;
+  return true;
+}
+
 // cloudflare_server/src/worker.mjs
 var json = (code, data) => Response.json(data, { status: code, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } });
-var protectedPaths = /* @__PURE__ */ new Set(["/v1/session", "/v1/command", "/v1/state", "/v1/unity-state"]);
+var protectedPaths = /* @__PURE__ */ new Set(["/v1/session", "/v1/command", "/v1/state", "/v1/unity-state", "/v1/servers", "/v1/ping"]);
 var IslandState = class extends DurableObject {
   constructor(ctx, env) {
     super(ctx, env);
@@ -2330,11 +2382,12 @@ var IslandState = class extends DurableObject {
       this.engine = new Engine2({ ...persistence, world, presenceTimeoutMs: 2e4, allowSoloStart: true, allowStartedJoin: true, autoStartWhenReady: true });
       this.channel = new ReleaseChannel();
       if (env.VERIFIED_PUBLICATION_JSON) {
-        const publication = JSON.parse(env.VERIFIED_PUBLICATION_JSON), manifest = validateManifest(publication.manifest);
-        if (manifest.platforms.some((p) => p.contentVersion !== 0)) throw Error("content_delivery_not_integrated");
-        if (!Array.isArray(publication.verified) || publication.verified.length !== 2 || !Number.isFinite(publication.publishedAt)) throw Error("publication_proof_missing");
-        for (const p of manifest.platforms) if (!publication.verified.some((v) => v.url === p.binary.url && v.bytes === p.binary.bytes && v.sha256 === p.binary.sha256)) throw Error("publication_proof_mismatch");
-        this.channel.current = { manifest, verified: publication.verified, publishedAt: publication.publishedAt };
+        const publication2 = JSON.parse(env.VERIFIED_PUBLICATION_JSON), manifest = validateManifest(publication2.manifest);
+        if (manifest.platforms.some((p) => p.contentVersion > 0 && p.minimumBuild < 4)) throw Error("content_delivery_requires_native_build4");
+        const expectedArtifacts = manifest.platforms.flatMap((p) => [p.binary, ...p.contentVersion > 0 ? [p.content] : []]);
+        if (!Array.isArray(publication2.verified) || publication2.verified.length !== expectedArtifacts.length || !Number.isFinite(publication2.publishedAt)) throw Error("publication_proof_missing");
+        for (const artifact of expectedArtifacts) if (!publication2.verified.some((v) => v.url === artifact.url && v.bytes === artifact.bytes && v.sha256 === artifact.sha256)) throw Error("publication_proof_mismatch");
+        this.channel.current = { manifest, verified: publication2.verified, publishedAt: publication2.publishedAt };
       }
       await ctx.storage.sync();
     });
@@ -2343,7 +2396,7 @@ var IslandState = class extends DurableObject {
     if (!this.channel.current) return json(503, { error: "release_unavailable", message: "Both Android and iOS publication must be verified before game entry." });
     if (this.channel.current.manifest.serverUrl !== new URL(request.url).origin) return json(503, { error: "publication_endpoint_mismatch" });
     const blocked = this.channel.checkClient(Object.fromEntries(request.headers));
-    return blocked ? json(426, { ...blocked, message: "\u0421\u043A\u0430\u0447\u0430\u0439\u0442\u0435 \u043D\u043E\u0432\u044B\u0435 \u0444\u0430\u0439\u043B\u044B \u0438\u0433\u0440\u044B" }) : null;
+    return blocked ? json(426, { ...blocked, message: "Download the new game files" }) : null;
   }
   fetch(request) {
     return this.ctx.blockConcurrencyWhile(async () => {
@@ -2357,10 +2410,29 @@ var IslandState = class extends DurableObject {
       }
     });
   }
+  async alarm() {
+    archiveOfficialWorld(this.engine);
+    await this.ctx.storage.sync();
+  }
   async route(request) {
     if (this.failed || this.engine.faulted) return json(503, { error: "storage_unavailable" });
     const url = new URL(request.url), path = url.pathname;
     if (url.search) return json(400, { error: "query_not_supported" });
+    const scheduledKey = request.headers.get("x-island-internal-key");
+    let scheduled = null;
+    if (scheduledKey) {
+      try {
+        scheduled = describeServer(scheduledKey, this.env);
+      } catch {
+        return json(400, { error: "invalid_server_key" });
+      }
+      ensureOfficialWorld(this.engine, scheduled);
+      archiveOfficialWorld(this.engine);
+      if (!await this.ctx.storage.getAlarm() && serverOpen(scheduled)) await this.ctx.storage.setAlarm(scheduled.endsAt);
+      await this.ctx.storage.sync();
+      if (path === "/__schedule/info") return json(200, { ...scheduled, online: serverOpen(scheduled) ? this.engine.live(this.engine.state.rooms["scheduled-world"]).length : 0, status: serverOpen(scheduled) ? "open" : "closed" });
+      if (!serverOpen(scheduled)) return json(410, { error: "server_closed", endsAt: scheduled.endsAt, archived: true });
+    }
     const now = Date.now(), key = request.headers.get("CF-Connecting-IP") || "local";
     let bucket = this.rates.get(key);
     if (!bucket) {
@@ -2382,6 +2454,7 @@ var IslandState = class extends DurableObject {
       const blocked2 = this.checkRelease(request);
       if (blocked2) return blocked2;
     }
+    if (request.method === "GET" && path === "/v1/ping") return json(200, { serverTime: Date.now(), serverKey: scheduled?.key ?? null });
     const authorization = request.headers.get("Authorization") || "", token = authorization.startsWith("Bearer ") ? authorization.slice(7) : "";
     if (request.method === "GET" && ["/v1/state", "/v1/unity-state"].includes(path)) {
       const v = this.engine.view(token), r = v.room;
@@ -2410,7 +2483,18 @@ var IslandState = class extends DurableObject {
     if (!data || typeof data !== "object" || Array.isArray(data)) return json(400, { error: "invalid_body" });
     const blocked = this.checkRelease(request);
     if (blocked) return blocked;
-    const result = path === "/v1/session" ? this.engine.register(data.name) : this.engine.command(token, data.seq, data.command);
+    let result;
+    if (path === "/v1/session") {
+      if (scheduled && this.engine.live(this.engine.state.rooms["scheduled-world"]).length >= scheduled.maxPlayers) return json(409, { error: "room_full" });
+      result = this.engine.register(data.name);
+      if (scheduled) {
+        const joined = this.engine.command(result.token, 1, { type: "join_room", roomId: "scheduled-world" });
+        if (!joined.ok) return json(409, { error: joined.error });
+      }
+    } else {
+      if (scheduled && !["move", "harvest", "craft", "cancel_craft", "claim_crafts", "equip", "bind_quick", "reload", "attack", "place_station", "station_use", "build", "upgrade", "toggle_door"].includes(data.command?.type)) return json(400, { error: "official_world_command_not_supported" });
+      result = this.engine.command(token, data.seq, data.command);
+    }
     await this.ctx.storage.sync();
     return json(path === "/v1/session" ? 201 : 200, result);
   }
@@ -2421,7 +2505,9 @@ var worker_default = {
     if (request.method === "GET" && path === "/health") return json(200, { ok: true, protocol: 1, completeGame: false, storage: "sqlite-durable-object", releaseRequired: true });
     if (request.method === "GET" && ["/v1/catalog", "/v1/unity-catalog"].includes(path)) return json(200, path === "/v1/catalog" ? catalog2 : { ...catalog2, recipes: catalog2.recipes.map((r) => ({ ...r, inputs: Object.entries(r.inputs).map(([id, qty]) => ({ id, qty })) })) });
     if (!protectedPaths.has(path) && !["/v1/bootstrap", "/v1/release"].includes(path)) return json(404, { error: "not_found" });
-    let forwarded = request;
+    const headers = new Headers(request.headers);
+    headers.delete("x-island-internal-key");
+    let forwarded = null;
     if (request.method === "POST") {
       const declared = Number(request.headers.get("Content-Length") || 0);
       if (declared > 16384) return json(413, { error: "body_too_large" });
@@ -2447,12 +2533,47 @@ var worker_default = {
         bytes.set(c, offset);
         offset += c.length;
       }
-      forwarded = new Request(request.url, { method: request.method, headers: request.headers, body: bytes });
+      forwarded = new Request(request.url, { method: request.method, headers, body: bytes });
+    }
+    if (!forwarded) forwarded = new Request(request, { headers });
+    if (request.method === "GET" && path === "/v1/servers") {
+      const worlds = await Promise.all(currentServers(Date.now(), env).map(async (s) => {
+        const stub = env.ISLAND.get(env.ISLAND.idFromName("scheduled-world-v1/" + s.key));
+        const h = new Headers(headers);
+        h.set("x-island-internal-key", s.key);
+        const r = await stub.fetch(new Request("https://island.internal/__schedule/info", { headers: h }));
+        if (!r.ok) throw Error("directory_world_unavailable");
+        return r.json();
+      }));
+      return json(200, { schema: 1, serverTime: Date.now(), servers: worlds });
+    }
+    const selection = headers.get("x-island-server");
+    if (selection) {
+      try {
+        describeServer(selection, env);
+      } catch {
+        return json(400, { error: "invalid_server_key" });
+      }
+      headers.set("x-island-internal-key", selection);
+      forwarded = new Request(forwarded, { headers });
+      return env.ISLAND.get(env.ISLAND.idFromName("scheduled-world-v1/" + selection)).fetch(forwarded);
     }
     return env.ISLAND.get(env.ISLAND.idFromName("island-world-v1")).fetch(forwarded);
   }
 };
+
+// release_next/server_browser_release/release-entry.mjs
+var publication = { "manifest": { "schema": 1, "revision": 2, "id": "last-horizon-0.16.0-b4", "mandatory": true, "serverUrl": "https://islandsurvival.akakqkkakwkwkqkqqo.workers.dev", "platforms": [{ "name": "android", "minimumBuild": 4, "contentVersion": 1, "binary": { "url": "https://github.com/akakqkkakwkwkqkqqo-ui/IslandSurvival/releases/download/last-horizon-0.16.0-b4/LastHorizon-0.16-b4.apk", "bytes": 47551777, "sha256": "4105251de54ded0d8cd820589ab3129b3dfe0de7999f588c4d744e02eaa4c1ce", "kind": "apk" }, "content": { "url": "https://raw.githubusercontent.com/akakqkkakwkwkqkqqo-ui/IslandSurvival/da6e6469e2423ad07d59f03bae4c3f19174646e4/native-content/last-horizon-android-v1.bundle", "bytes": 1308723, "sha256": "cfd561b26c9fca7cd5ecc6cfc5d544f91a3448f0bc24a2ee759eb38eaef0fbe9", "runtime": "0d4401777a38bde0d1d7fbc09ed7f42555bfd6098056149e3ab12f4767cf4864", "kind": "bundle" } }, { "name": "ios", "minimumBuild": 4, "contentVersion": 1, "binary": { "url": "https://github.com/akakqkkakwkwkqkqqo-ui/IslandSurvival/releases/download/last-horizon-0.16.0-b4/LastHorizon-0.16-b4-unsigned.ipa", "bytes": 65550669, "sha256": "df62d54ac892554fcc298de728daa417ed422079a16e29ae1e359e93ab2b4b8e", "kind": "ipa" }, "content": { "url": "https://raw.githubusercontent.com/akakqkkakwkwkqkqqo-ui/IslandSurvival/da6e6469e2423ad07d59f03bae4c3f19174646e4/native-content/last-horizon-ios-v1.bundle", "bytes": 1326725, "sha256": "01f6312a807895270d3295c91f1c6e689986526904cffb120e86325c518665cc", "runtime": "f687082be51b6475f942fa1979269649752ba92ef953b0f9fd10495df68d249c", "kind": "bundle" } }] }, "verified": [{ "url": "https://github.com/akakqkkakwkwkqkqqo-ui/IslandSurvival/releases/download/last-horizon-0.16.0-b4/LastHorizon-0.16-b4.apk", "bytes": 47551777, "sha256": "4105251de54ded0d8cd820589ab3129b3dfe0de7999f588c4d744e02eaa4c1ce" }, { "url": "https://github.com/akakqkkakwkwkqkqqo-ui/IslandSurvival/releases/download/last-horizon-0.16.0-b4/LastHorizon-0.16-b4-unsigned.ipa", "bytes": 65550669, "sha256": "df62d54ac892554fcc298de728daa417ed422079a16e29ae1e359e93ab2b4b8e" }, { "url": "https://raw.githubusercontent.com/akakqkkakwkwkqkqqo-ui/IslandSurvival/da6e6469e2423ad07d59f03bae4c3f19174646e4/native-content/last-horizon-android-v1.bundle", "bytes": 1308723, "sha256": "cfd561b26c9fca7cd5ecc6cfc5d544f91a3448f0bc24a2ee759eb38eaef0fbe9" }, { "url": "https://raw.githubusercontent.com/akakqkkakwkwkqkqqo-ui/IslandSurvival/da6e6469e2423ad07d59f03bae4c3f19174646e4/native-content/last-horizon-ios-v1.bundle", "bytes": 1326725, "sha256": "01f6312a807895270d3295c91f1c6e689986526904cffb120e86325c518665cc" }], "publishedAt": 1792982397067, "serversEpoch": 1792982396067 };
+var releaseEnv = (env) => ({ ...env, VERIFIED_PUBLICATION_JSON: JSON.stringify(publication), SERVERS_EPOCH: String(publication.serversEpoch) });
+var IslandState2 = class extends IslandState {
+  constructor(ctx, env) {
+    super(ctx, releaseEnv(env));
+  }
+};
+var release_entry_default = { fetch(request, env, ctx) {
+  return worker_default.fetch(request, releaseEnv(env), ctx);
+} };
 export {
-  IslandState,
-  worker_default as default
+  IslandState2 as IslandState,
+  release_entry_default as default
 };
